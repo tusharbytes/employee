@@ -55,7 +55,7 @@ function Page() {
       return
     }
     alert("OTP Verified! Registration complete.")
-   
+
     setFormData({
       name: '',
       email: '',
@@ -112,7 +112,7 @@ function Page() {
       {step === 1 && (
         <div className="space-y-6">
           <Input
-          type='number'
+            type='number'
             label="Verify Number (Enter OTP)"
             name="otp"
             value={otp}
