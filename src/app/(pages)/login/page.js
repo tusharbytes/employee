@@ -40,44 +40,59 @@ function LoginFormPage() {
     }
 
     return (
-        <div className="max-w-md mx-auto mt-10 p-6 rounded  ">
-            <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
+    <div className="flex items-center justify-center p-4">
+  <div className="flex flex-col md:flex-row max-w-4xl items-center w-full bg-white rounded-lg">
+    
+    {/* Login Form Section */}
+    <div className="md:w-1/2 p-6">
+      <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-                <Input
-                    label="Email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                    error={errors.email}
-                />
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <Input
+          label="Email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Enter your email"
+          error={errors.email}
+        />
+        <Input
+          label="Password"
+          name="password"
+          type="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Enter your password"
+          error={errors.password}
+        />
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white px-6 py-4 rounded-2xl hover:bg-blue-700"
+        >
+          Login
+        </button>
+      </form>
 
-                <Input
-                    label="Password"
-                    name="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Enter your password"
-                    error={errors.password}
-                />
+      <p className="text-center mt-4">
+        Don’t have an account?{' '}
+        <Link href="/register" className="text-blue-500 underline">
+          Register
+        </Link>
+      </p>
+    </div>
 
-                <button
-                    type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-                >
-                    Login
-                </button>
-            </form>
+    {/* Image Section */}
+    <div className="hidden md:block md:w-1/2">
+      <img
+        src="/Images/login.png" // or replace with actual path or uploaded image
+        alt="Login Illustration"
+        className="w-full h-full object-cover rounded-r-lg"
+      />
+    </div>
+  </div>
+</div>
 
-            <p className="text-center mt-4">
-                Don’t have an account?{' '}
-                <Link href="/register" className="text-blue-500 underline">
-                    Register
-                </Link>
-            </p>
-        </div>
+
     )
 }
 
