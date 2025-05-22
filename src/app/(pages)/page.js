@@ -6,71 +6,98 @@ import Home from '../components/Home';
 import { MdOutlineMenu } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { GrLanguage } from "react-icons/gr";
+import { LuSunDim } from "react-icons/lu";
+import { IoMdMoon } from "react-icons/io";
+import { useDarkMode } from '../common/UseTogleContext';
+import Langswitcher from '../components/lang-switcher';
+
 function Page() {
-    const [viewMobile, setViewMobile] = useState(false)
-    return (
-        <div>
-            <header className="bg-white fixed w-full top-0 z-50">
-                <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-                    {/* Logo */}
-                    <div className="flex items-center">
-                        <h1 className="font-extrabold text-2xl">Employee</h1>
-                    </div>
+  const [viewMobile, setViewMobile] = useState(false);
+  const { darkMode, setDarkMode } = useDarkMode();
 
-                    {/* Desktop Nav */}
-                    <nav className="hidden md:flex gap-6 text-gray-700 font-serif font-medium">
-                        <Link href="/register" className="hover:underline hover:text-green-600 transition duration-200">Register</Link>
-                        <Link href="/login" className="hover:underline hover:text-green-600 transition duration-200">Login</Link>
-                        <Link href="/about" className="hover:underline hover:text-green-600 transition duration-200">About</Link>
-                        <Link href="/service" className="hover:underline hover:text-green-600 transition duration-200">Service</Link>
-                        <Link href="/contact" className="hover:underline hover:text-green-600 transition duration-200">Contact</Link>
-                    </nav>
+  return (
+    <div className={`${darkMode ? 'bg-black text-white' : 'bg-white text-black'} min-h-screen`}>
+      {/* Header */}
+      <header className={`fixed top-0 left-0 w-full z-50   ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+          
+          {/* Logo */}
+          <h1 className="text-2xl font-extrabold">Employee</h1>
 
-                    {/* Get Started Button */}
-                    <div className="hidden md:block space-x-1.5 gap-2">
-                        <div className='flex gap-2'>
-                            <Link href="/register" className="bg-green-500 cursor-pointer hover:bg-green-700 text-white rounded-full px-4 py-2 transition duration-300">
-                                Get Started
-                            </Link>
-                            <div className='flex items-center'>
-                                <GrLanguage className="text-xl" />
-                                <select className="outline-none bg-transparent text-sm">
-                                    <option value="en">Eng</option>
-                                    <option value="hi">Hi</option>
-                                </select></div>
-                        </div>
-                    </div>
-                    {/* Mobile Menu Toggle */}
-                    <div className="md:hidden">
-                        <button onClick={() => setViewMobile(!viewMobile)} className="text-3xl text-black focus:outline-none">
-                            {!viewMobile ? <MdOutlineMenu /> : <RxCross2 />}
-                        </button>
-                    </div>
-                </div>
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex gap-6 font-medium font-serif">
+            {['register', 'login', 'about', 'service', 'contact'].map((route) => (
+              <Link
+                key={route}
+                href={`/${route}`}
+                className="hover:underline hover:text-green-600 transition duration-200 capitalize"
+              >
+                {route}
+              </Link>
+            ))}
+          </nav>
 
-                {/* Mobile Dropdown Menu */}
-                {viewMobile && (
-                    <ul className="md:hidden w-full bg-white text-gray-700 font-serif font-medium shadow-md border-t border-gray-200 px-6 py-4 space-y-4">
-                        <li><Link href="/register" className="hover:underline hover:text-green-600 transition duration-200">Register</Link></li>
-                        <li><Link href="/login" className="hover:underline hover:text-green-600 transition duration-200">Login</Link></li>
-                        <li><Link href="/about" className="hover:underline hover:text-green-600 transition duration-200">About</Link></li>
-                        <li><Link href="/service" className="hover:underline hover:text-green-600 transition duration-200">Service</Link></li>
-                        <li><Link href="/contact" className="hover:underline hover:text-green-600 transition duration-200">Contact</Link></li>
-                        <li>
-                            <div className='flex items-center'>
-                                <GrLanguage className="text-xl" />
-                                <select className="outline-none bg-transparent text-sm">
-                                    <option value="en">Eng</option>
-                                    <option value="hi">Hi</option>
-                                </select></div>
-                        </li>
-                    </ul>
-                )}
-            </header>
+          {/* Theme + Get Started + Language */}
+          <div className="hidden md:flex items-center gap-4">
+            <button onClick={() => setDarkMode(!darkMode)} className="text-2xl">
+              {darkMode ? <IoMdMoon /> : <LuSunDim className="text-amber-300" />}
+            </button>
+            <Link
+              href="/register"
+              className="bg-green-500 hover:bg-green-700 text-white rounded-full px-4 py-2 transition duration-300"
+            >
+              Get Started
+            </Link>
+            <div className="flex items-center gap-1">
+              <GrLanguage className="text-xl" />
+              <select className="bg-transparent outline-none text-sm">
+                <option value="en">Eng</option>
+                <option value="hi">Hi</option>
+              </select>
+            </div>
+          </div>
 
-            <Slider />
-            <Home />
-        </div >
-    );
+          {/* Mobile Toggle */}
+          <div className="md:hidden">
+            <button onClick={() => setViewMobile(!viewMobile)} className="text-3xl">
+              {viewMobile ? <RxCross2 /> : <MdOutlineMenu />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {viewMobile && (
+          <ul className={`md:hidden px-6 py-4 space-y-4 font-serif font-medium border-t shadow-md ${darkMode ? 'bg-black text-white border-gray-700' : 'bg-white text-gray-800 border-gray-200'}`}>
+            {['register', 'login', 'about', 'service', 'contact'].map((route) => (
+              <li key={route}>
+                <Link
+                  href={`/${route}`}
+                  className="block hover:underline hover:text-green-600 transition duration-200 capitalize"
+                >
+                  {route}
+                </Link>
+              </li>
+            ))}
+            <li className="flex items-center gap-2">
+              <GrLanguage className="text-xl" />
+              <select className="bg-transparent outline-none text-sm">
+                <option value="en">Eng</option>
+                <option value="hi">Hi</option>
+              </select>
+            </li>
+          </ul>
+        )}
+      </header>
+
+      {/* Content below header */}
+      <main className="pt-[90px]"> {/* ensures content doesn't go under header */}
+        <Slider />
+        <Home />
+        <Langswitcher/>
+        <p>sds  </p>
+      </main>
+    </div>
+  );
 }
+
 export default Page;
